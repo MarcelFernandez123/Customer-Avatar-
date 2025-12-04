@@ -2,12 +2,66 @@
 
 A production-ready web application that helps performance marketers quickly research and generate accurate, data-driven customer avatars for marketing campaigns.
 
+## Quick Deploy
+
+### Deploy on Replit (Recommended for Quick Start)
+
+1. Click the button below to import this project to Replit:
+
+   [![Run on Replit](https://replit.com/badge/github/MarcelFernandez123/Customer-Avatar-)](https://replit.com/new/github/MarcelFernandez123/Customer-Avatar-)
+
+2. Once imported, go to **Secrets** (lock icon in the left sidebar)
+
+3. Add your environment variables:
+   - Key: `ANTHROPIC_API_KEY` Value: `your_anthropic_api_key`
+
+4. Click **Run** to start the application
+
+5. Your app will be live at your Replit URL!
+
+> **Get your Anthropic API key at:** https://console.anthropic.com/settings/keys
+
+### Deploy on Vercel
+
+1. Click the button below:
+
+   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/MarcelFernandez123/Customer-Avatar-&env=ANTHROPIC_API_KEY&envDescription=API%20key%20for%20Claude%20AI&envLink=https://console.anthropic.com/settings/keys)
+
+2. Add your `ANTHROPIC_API_KEY` when prompted
+
+3. Deploy!
+
+### Deploy on Railway
+
+1. Click the button below:
+
+   [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/nextjs?referralCode=)
+
+2. Connect your GitHub and select this repository
+
+3. Add environment variable: `ANTHROPIC_API_KEY`
+
+4. Deploy!
+
+### Deploy on Render
+
+1. Go to [Render Dashboard](https://dashboard.render.com/)
+2. Click **New** > **Web Service**
+3. Connect your GitHub and select this repository
+4. Configure:
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm start`
+5. Add environment variable: `ANTHROPIC_API_KEY`
+6. Deploy!
+
+---
+
 ## Features
 
 ### Core Functionality
 
 - **Avatar Research Module**: Automated market research, competitor analysis, and trend identification
-- **AI-Powered Generation**: Creates comprehensive customer avatars using GPT-4
+- **AI-Powered Generation**: Creates comprehensive customer avatars using Claude AI
 - **Platform-Specific Targeting**: Ready-to-use targeting parameters for Facebook, Google, and LinkedIn
 - **Industry Templates**: Pre-configured templates for 12+ common industries
 - **Quick & Comprehensive Modes**: Balance speed vs. depth based on your needs
@@ -44,24 +98,26 @@ Each generated avatar includes:
 - **Frontend**: Next.js 15, React 19, TypeScript
 - **Styling**: Tailwind CSS 4
 - **State Management**: Zustand with persistence
-- **Database**: Supabase (PostgreSQL)
+- **Database**: Supabase (PostgreSQL) - Optional
 - **AI**: Anthropic Claude (Claude Sonnet 4)
 - **Web Scraping**: Cheerio (with optional ScrapingBee integration)
 
-## Getting Started
+---
+
+## Local Development
 
 ### Prerequisites
 
 - Node.js 18+
 - npm or yarn
 - Anthropic API key (for Claude)
-- Supabase account (optional for persistence)
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-cd avatar-generator
+git clone https://github.com/MarcelFernandez123/Customer-Avatar-.git
+cd Customer-Avatar-
 ```
 
 2. Install dependencies:
@@ -69,32 +125,15 @@ cd avatar-generator
 npm install
 ```
 
-3. Configure environment variables:
+3. Create environment file:
 ```bash
 cp .env.local.example .env.local
 ```
 
-Edit `.env.local` with your API keys:
+4. Edit `.env.local` with your API key:
 ```env
-# Required
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
-
-# Optional - for database persistence
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url_here
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
-
-# Optional - for enhanced web scraping
-SCRAPINGBEE_API_KEY=your_scrapingbee_api_key_here
-
-# Optional - for Meta Ads API integration
-META_APP_ID=your_meta_app_id_here
-META_APP_SECRET=your_meta_app_secret_here
-META_ACCESS_TOKEN=your_meta_access_token_here
 ```
-
-4. Set up Supabase database (optional):
-   - Create a new Supabase project
-   - Run the SQL schema from `src/lib/supabase.ts` in the SQL editor
 
 5. Start the development server:
 ```bash
@@ -110,11 +149,27 @@ npm run build
 npm start
 ```
 
+---
+
+## Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `ANTHROPIC_API_KEY` | **Yes** | Anthropic API key for Claude - [Get one here](https://console.anthropic.com/settings/keys) |
+| `NEXT_PUBLIC_SUPABASE_URL` | No | Supabase project URL (for database persistence) |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | No | Supabase anonymous key |
+| `SCRAPINGBEE_API_KEY` | No | ScrapingBee API for reliable web scraping |
+| `META_APP_ID` | No | Facebook app ID |
+| `META_APP_SECRET` | No | Facebook app secret |
+| `META_ACCESS_TOKEN` | No | Facebook access token |
+
+---
+
 ## Usage Guide
 
 ### Creating an Avatar
 
-1. Click "New Avatar" from the dashboard
+1. Click **"New Avatar"** from the dashboard
 2. Select an industry template (optional)
 3. Fill in your business information:
    - Industry and niche
@@ -158,6 +213,26 @@ npm start
 - **CSV Export**: Targeting data in spreadsheet format
 - **Copy to Clipboard**: Quick copy of platform-specific targeting
 
+---
+
+## Industry Templates
+
+Pre-configured templates available:
+- E-commerce - Fashion & Apparel
+- SaaS - B2B Software
+- Local Services - Home Improvement
+- Health & Fitness
+- Online Education & Courses
+- Personal Finance & Investing
+- Beauty & Skincare
+- B2B Marketing Services
+- Real Estate
+- Food & Restaurant
+- Pet Products & Services
+- Travel & Tourism
+
+---
+
 ## Project Structure
 
 ```
@@ -183,38 +258,23 @@ avatar-generator/
 │   │   └── avatarStore.ts      # Zustand store
 │   └── types/
 │       └── avatar.ts           # TypeScript definitions
-├── .env.local
+├── .env.local.example
 ├── package.json
 └── README.md
 ```
+
+---
 
 ## API Reference
 
 ### POST /api/research
 Research market data and competitors.
 
-```typescript
-{
-  businessInfo: BusinessInfo,
-  mode: 'quick' | 'comprehensive'
-}
-```
-
 ### POST /api/generate
 Generate a complete avatar.
 
-```typescript
-{
-  businessInfo: BusinessInfo,
-  researchData: ResearchData,
-  mode: 'quick' | 'comprehensive'
-}
-```
-
 ### GET /api/avatars
 List all saved avatars.
-
-Query params: `industry`, `isTemplate`, `search`
 
 ### POST /api/avatars
 Save a new avatar.
@@ -228,35 +288,7 @@ Update an avatar.
 ### DELETE /api/avatars/[id]
 Delete an avatar.
 
-## Industry Templates
-
-Pre-configured templates available:
-- E-commerce - Fashion & Apparel
-- SaaS - B2B Software
-- Local Services - Home Improvement
-- Health & Fitness
-- Online Education & Courses
-- Personal Finance & Investing
-- Beauty & Skincare
-- B2B Marketing Services
-- Real Estate
-- Food & Restaurant
-- Pet Products & Services
-- Travel & Tourism
-
-## Configuration Options
-
-### Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `ANTHROPIC_API_KEY` | Yes | Anthropic API key for Claude |
-| `NEXT_PUBLIC_SUPABASE_URL` | No | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | No | Supabase anonymous key |
-| `SCRAPINGBEE_API_KEY` | No | ScrapingBee API for reliable scraping |
-| `META_APP_ID` | No | Facebook app ID |
-| `META_APP_SECRET` | No | Facebook app secret |
-| `META_ACCESS_TOKEN` | No | Facebook access token |
+---
 
 ## Performance
 
@@ -265,14 +297,7 @@ Pre-configured templates available:
 - Avatar data cached locally using Zustand persist
 - Research cache available in Supabase (24-hour expiry)
 
-## Deploy on Vercel
-
-The easiest way to deploy is using [Vercel](https://vercel.com):
-
-1. Push your code to GitHub
-2. Import the repository in Vercel
-3. Add environment variables in Vercel dashboard
-4. Deploy
+---
 
 ## License
 
